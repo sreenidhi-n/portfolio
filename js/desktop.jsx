@@ -349,31 +349,63 @@ function LoginScreen({ onEnter }) {
         </div>
         <div className="login-body">
           <div className="login-side">
+            <img
+              src="assets/sreenidhi.jpg"
+              alt="Sreenidhi Nallajerla"
+              style={{
+                width: '100%', maxWidth: 120,
+                aspectRatio: '1 / 1',
+                objectFit: 'cover',
+                border: '2px solid',
+                borderTopColor: '#ffffff', borderLeftColor: '#ffffff',
+                borderRightColor: '#404040', borderBottomColor: '#404040',
+                marginBottom: 8
+              }}
+            />
             <div className="big">sreenidhi<span style={{color:'#ffffff'}}>OS</span></div>
-            <div style={{fontSize:11, fontWeight:'normal', opacity:0.9}}>a one-stop portfolio</div>
+            <div style={{fontSize:10, fontWeight:'normal', opacity:0.9, lineHeight:1.3, marginTop:2}}>a one-stop portfolio</div>
           </div>
           <div className="login-main">
             <h2>Log On to sreenidhiOS</h2>
             <p>To begin, click a user name below.</p>
             <p style={{color:'#444'}}>Everything is interactive — drag windows, right-click the desktop, open the Terminal.</p>
-            <ul className="file-list" style={{margin:'8px 0 0'}}>
-              <li onClick={onEnter} style={{cursor:'default'}}>
-                <span className="file-icon" style={{
-                  background:'#000080', color:'#fff', fontWeight:'bold',
-                  display:'inline-flex', alignItems:'center', justifyContent:'center',
-                  fontSize:11
-                }}>S</span>
-                <span><b>Sreenidhi</b> — cybersec · founder · pianist</span>
-              </li>
-              <li onClick={onEnter} style={{cursor:'default'}}>
-                <span className="file-icon" style={{
-                  background:'#808080', color:'#fff', fontWeight:'bold',
-                  display:'inline-flex', alignItems:'center', justifyContent:'center',
-                  fontSize:11
-                }}>?</span>
-                <span><b>Guest</b> — have a look around</span>
-              </li>
-            </ul>
+            <div style={{margin:'10px 0 0'}}>
+              <div onClick={onEnter} className="login-user-row">
+                <div style={{
+                  width:48, height:48,
+                  background:'#000080',
+                  border:'2px solid',
+                  borderTopColor:'#ffffff', borderLeftColor:'#ffffff',
+                  borderRightColor:'#404040', borderBottomColor:'#404040',
+                  display:'flex', alignItems:'center', justifyContent:'center',
+                  color:'#ffffff', fontWeight:'bold', fontSize:28,
+                  flexShrink:0,
+                  fontFamily:'"MS Sans Serif", sans-serif',
+                  letterSpacing:'-1px'
+                }}>S</div>
+                <div>
+                  <div style={{fontWeight:'bold', fontSize:12, color:'#000080'}}>Sreenidhi</div>
+                  <div style={{fontSize:11, color:'#444'}}>cybersec · founder · pianist</div>
+                </div>
+              </div>
+              <div onClick={onEnter} className="login-user-row">
+                <div style={{
+                  width:48, height:48,
+                  background:'#c0c0c0',
+                  border:'2px solid',
+                  borderTopColor:'#ffffff', borderLeftColor:'#ffffff',
+                  borderRightColor:'#404040', borderBottomColor:'#404040',
+                  display:'flex', alignItems:'center', justifyContent:'center',
+                  color:'#000080', fontWeight:'bold', fontSize:24,
+                  flexShrink:0,
+                  fontFamily:'"MS Sans Serif", sans-serif'
+                }}>?</div>
+                <div>
+                  <div style={{fontWeight:'bold', fontSize:12, color:'#000080'}}>Guest</div>
+                  <div style={{fontSize:11, color:'#444'}}>have a look around</div>
+                </div>
+              </div>
+            </div>
             <div className="login-actions">
               <button className="xp-btn" onClick={onEnter}>Log On</button>
               <button className="xp-btn" onClick={onEnter}>Cancel</button>
