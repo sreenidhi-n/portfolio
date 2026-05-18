@@ -34,14 +34,15 @@
   * { box-sizing: border-box; }
   html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; }
   body {
-    font-family: "Pixelated MS Sans Serif", "MS Sans Serif", "Microsoft Sans Serif", "Tahoma", sans-serif;
+    font-family: "Tahoma", "MS Sans Serif", "Microsoft Sans Serif", "Geneva", sans-serif;
     font-size: 11px;
     color: var(--win-text);
     background: var(--desktop-bg);
     user-select: none; -webkit-user-select: none;
     cursor: default;
-    -webkit-font-smoothing: none; -moz-osx-font-smoothing: grayscale;
-    image-rendering: pixelated;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   /* Flat teal desktop with subtle dithered tile (dot-pattern) — no Microsoft assets. */
@@ -582,7 +583,7 @@
     display: flex; align-items: center; justify-content: center;
   }
   .login-window {
-    width: 480px;
+    width: 540px;
     background: var(--win-bg);
     border: 2px solid;
     border-top-color: #dfdfdf;
@@ -606,20 +607,21 @@
     display: flex; gap: 14px;
   }
   .login-side {
-    width: 110px;
+    width: 130px;
     background: #008080;
     color: white;
     text-align: center;
-    padding: 10px 6px;
-    font-family: "MS Sans Serif", sans-serif;
+    padding: 10px 8px;
+    font-family: "Tahoma", "MS Sans Serif", sans-serif;
     font-size: 14px; font-weight: bold;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 4px;
   }
   .login-side .big {
-    font-size: 22px; font-weight: bold;
+    font-size: 18px; font-weight: bold;
     color: #ffd55b;
     line-height: 1.05;
+    letter-spacing: -0.5px;
   }
   .login-main { flex: 1; font-size: 12px; }
   .login-main h2 {
@@ -628,6 +630,15 @@
   }
   .login-main p { font-size: 11px; line-height: 1.5; margin-bottom: 8px; }
   .login-actions { display: flex; gap: 6px; margin-top: 14px; justify-content: flex-end; }
+  .login-user-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 4px 6px;
+    cursor: default;
+    margin-bottom: 2px;
+  }
+  .login-user-row:hover { background: var(--highlight); color: white; }
+  .login-user-row:hover div div:first-child { color: #fff !important; }
+  .login-user-row:hover div div:last-child { color: #d0d0ff !important; }
 
   /* ---------- Notepad ---------- */
   .notepad-body {
