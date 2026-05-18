@@ -65,7 +65,12 @@ const RESUME = {
 const AboutApp = () => (
   <>
     <div className="welcome-panel">
-      <div className="welcome-icon">S</div>
+      <img
+        src="./assets/sreenidhi.jpg"
+        alt="Sreenidhi Nallajerla"
+        className="welcome-icon"
+        style={{ objectFit: 'cover', padding: 0 }}
+      />
       <div>
         <h1>Sreenidhi Nallajerla</h1>
         <p className="tagline">Cybersecurity consultant &amp; founder · Bengaluru</p>
@@ -649,13 +654,19 @@ const NetworkApp = () => {
 // ====================================================================
 // PIANO
 // ====================================================================
-// K.545 opening (right hand) — C major arpeggio + scale, simplified
+// Rondo in A minor, K.511 — opening theme (right hand, simplified, no ornaments)
+// Andante, 6/8. A minor.
 const PIANO_PHRASE = [
-  // [midi, beats]
-  [60, 1], [64, 1], [67, 1],
-  [72, 0.5], [71, 0.5], [72, 0.5], [69, 0.5],
-  [72, 0.5], [69, 0.5], [65, 1],
-  [64, 1.5], [62, 0.5], [60, 2]
+  // [midi, beats]   beat = one eighth-note
+  [69, 0.5],                    // A4
+  [71, 0.18], [69, 0.32],       // B-A appoggiatura turn
+  [72, 0.5],                    // C5
+  [71, 0.5],                    // B4
+  [69, 0.5],                    // A4
+  [68, 0.25], [69, 0.75],       // G#-A sigh (end of bar 1)
+  [72, 0.5], [76, 0.5],         // C-E lift
+  [74, 0.5], [72, 0.5],         // D-C
+  [71, 0.5], [69, 1.5]          // B-A (long, ritard)
 ];
 const WHITES = ['C','D','E','F','G','A','B','C','D','E','F','G','A','B'];
 const WHITE_MIDI = [60,62,64,65,67,69,71,72,74,76,77,79,81,83];
@@ -664,7 +675,7 @@ const BLACKS_PER_OCT = [0, 1, 3, 4, 5]; // index of "white-before"
 const BLACK_MIDI_OFFSETS = [1, 3, 6, 8, 10]; // semitones from C
 const PianoApp = ({ active }) => {
   const [activeNote, setActiveNote] = React.useState(null);
-  const [readout, setReadout] = React.useState('Sonata in C major, K. 545 — Mozart');
+  const [readout, setReadout] = React.useState('Rondo in A minor, K. 511 — Mozart');
   const audioCtxRef = React.useRef(null);
   const playingRef = React.useRef(false);
 
@@ -701,15 +712,15 @@ const PianoApp = ({ active }) => {
   async function playPhrase() {
     if (playingRef.current) return;
     playingRef.current = true;
-    setReadout('♪ Sonata in C major, K. 545');
+    setReadout('♪ Rondo in A minor, K. 511');
     const ctx = ensureCtx();
-    const tempo = 120;
+    const tempo = 78;  // Andante
     const beat = 60 / tempo * 1000 * 0.85;
     for (const [m, b] of PIANO_PHRASE) {
       playNote(m, b * 0.85);
       await new Promise(r => setTimeout(r, b * beat));
     }
-    setReadout('Sonata in C major, K. 545 — Mozart');
+    setReadout('Rondo in A minor, K. 511 — Mozart');
     playingRef.current = false;
   }
 
@@ -752,7 +763,7 @@ const PianoApp = ({ active }) => {
         </div>
       </div>
       <div className="piano-controls">
-        <button className="xp-btn" onClick={playPhrase}>▶ Play K.545</button>
+        <button className="xp-btn" onClick={playPhrase}>▶ Play K.511</button>
         <button className="xp-btn" onClick={() => { setActiveNote(null); setReadout('— pianist in passing, cybersecurity engineer by trade —'); }}>About</button>
       </div>
       <div style={{color:'#a8845a', fontSize:11, fontFamily:'Trebuchet MS, sans-serif', textAlign:'center', maxWidth:480}}>
