@@ -65,12 +65,7 @@ const RESUME = {
 const AboutApp = () => (
   <>
     <div className="welcome-panel">
-      <img
-        src="./assets/sreenidhi.jpg"
-        alt="Sreenidhi Nallajerla"
-        className="welcome-icon"
-        style={{ objectFit: 'cover', padding: 0 }}
-      />
+      <div className="welcome-icon">S</div>
       <div>
         <h1>Sreenidhi Nallajerla</h1>
         <p className="tagline">Cybersecurity consultant &amp; founder · Bengaluru</p>
@@ -79,6 +74,26 @@ const AboutApp = () => (
     <p>I run security assessments and compliance programs for clients across <strong>healthcare, AI, and fintech</strong>: penetration testing, DAST pipelines, compliance standards (ABDM/NHA, OWASP), and agentic AI workflows. On the product side, I'm building <strong>TASS</strong> — a stealth-mode platform focused on AI capability drift detection and design-phase threat analysis.</p>
     <p>I believe the next generation of cybersecurity must shift from reactive defense to <em>continuous, AI-driven prevention</em> — catching threats and design flaws before they reach production, cost-effectively and at scale.</p>
     <div className="pull-quote">tracing the lines between self-trust and security.</div>
+    <div style={{textAlign:'center', margin:'14px 0'}}>
+      <img
+        src="./assets/sreenidhi.jpg"
+        alt="Sreenidhi Nallajerla"
+        style={{
+          width: 220,
+          height: 220,
+          objectFit: 'cover',
+          border: '2px solid',
+          borderTopColor: '#ffffff',
+          borderLeftColor: '#ffffff',
+          borderRightColor: '#404040',
+          borderBottomColor: '#404040',
+          boxShadow: 'inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080'
+        }}
+      />
+      <div style={{fontSize: 10, color: '#666', marginTop: 4, fontStyle: 'italic'}}>
+        — Sreenidhi, 2025
+      </div>
+    </div>
     <div className="info-grid">
       <div className="info-card">
         <h3>Currently</h3>
