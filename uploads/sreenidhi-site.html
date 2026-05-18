@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sreenidhi Nallajerla — Cybersecurity Consultant & Founder</title>
+<meta name="description" content="Cybersecurity consultant and founder. Security assessments, DAST pipelines, compliance, and AI-driven prevention for healthcare, AI, and fintech.">
+<style>
+  :root {
+    --xp-window-bg: #ece9d8;
+    --xp-text: #000000;
+    --xp-link: #0033cc;
+    --xp-link-visited: #551a8b;
+    --xp-titlebar: linear-gradient(180deg, #0058e6 0%, #3a93ff 8%, #2278e6 40%, #2a83eb 88%, #1041a4 100%);
+    --xp-taskbar: linear-gradient(180deg, #2a8edb 0%, #2879c6 5%, #2069c6 10%, #2167c6 88%, #245edb 100%);
+    --xp-start-btn: linear-gradient(180deg, #5eac56 0%, #3c8c34 50%, #357d2e 100%);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0; padding: 0;
+    font-family: "Tahoma", "Geneva", sans-serif;
+    font-size: 11px;
+    color: var(--xp-text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Bliss-y wallpaper, CSS only */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(ellipse 800px 300px at 75% 25%, rgba(255, 240, 180, 0.25) 0%, transparent 60%),
+      linear-gradient(180deg,
+        #4a90d8 0%, #6db4e8 25%, #a8d4ed 55%, #c9e3f1 65%,
+        #5a8b3c 65.5%, #3d6e2a 100%);
+  }
+
+  body::after {
+    content: "";
+    position: fixed; inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(ellipse 140px 28px at 12% 18%, rgba(255,255,255,0.7) 0%, transparent 60%),
+      radial-gradient(ellipse 100px 22px at 18% 22%, rgba(255,255,255,0.55) 0%, transparent 60%),
+      radial-gradient(ellipse 200px 38px at 65% 12%, rgba(255,255,255,0.75) 0%, transparent 60%),
+      radial-gradient(ellipse 130px 26px at 88% 28%, rgba(255,255,255,0.5) 0%, transparent 60%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'><path d='M0,620 C200,540 400,650 600,600 C800,540 1000,580 1200,560 C1400,540 1500,580 1600,560 L1600,900 L0,900 Z' fill='%234d7d39'/><path d='M0,650 C150,610 350,680 550,660 C750,640 950,680 1150,650 C1350,620 1500,660 1600,640 L1600,900 L0,900 Z' fill='%233d6e2a' opacity='0.6'/></svg>");
+    background-size: cover, cover, cover, cover, 100% 100%;
+    background-repeat: no-repeat;
+    background-position: 0 0, 0 0, 0 0, 0 0, bottom;
+  }
+
+  .desktop {
+    min-height: 100vh;
+    padding: 24px 24px 60px;
+    position: relative;
+  }
+
+  .desktop-icons {
+    position: fixed;
+    top: 24px; left: 16px;
+    display: flex; flex-direction: column;
+    gap: 16px;
+    z-index: 5;
+  }
+
+  .desktop-icon {
+    display: flex; flex-direction: column; align-items: center;
+    width: 76px; cursor: pointer; text-align: center; text-decoration: none;
+  }
+
+  .desktop-icon-img { width: 36px; height: 36px; margin-bottom: 4px; }
+
+  .desktop-icon-label {
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.85), 0 0 3px rgba(0,0,0,0.7);
+    font-size: 11px; line-height: 1.2; padding: 1px 3px;
+  }
+
+  .desktop-icon:hover .desktop-icon-label {
+    background: #316ac5;
+    border: 1px dotted rgba(255,255,255,0.7);
+    padding: 0 2px;
+  }
+
+  .window-stack {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex; flex-direction: column;
+    gap: 18px;
+  }
+
+  .window {
+    background: var(--xp-window-bg);
+    border: 1px solid #0831d9;
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 0 0 1px #4684ee, 0 6px 18px rgba(0,0,0,0.45);
+    overflow: hidden;
+    user-select: text; -webkit-user-select: text;
+  }
+
+  .titlebar {
+    background: var(--xp-titlebar);
+    color: white;
+    padding: 3px 4px 3px 6px;
+    display: flex; align-items: center; gap: 4px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+    font-size: 12px; height: 26px;
+  }
+
+  .titlebar-icon { width: 16px; height: 16px; margin-right: 3px; flex-shrink: 0; }
+
+  .titlebar-text {
+    flex: 1;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+
+  .titlebar-buttons { display: flex; gap: 1px; }
+
+  .titlebar-btn {
+    width: 22px; height: 22px;
+    border: 1px solid #003c74; border-radius: 3px;
+    background: linear-gradient(180deg, #4f9cf5 0%, #2278e6 50%, #1c5fc8 100%);
+    color: white;
+    font-family: "Marlett", "Arial", sans-serif;
+    font-size: 10px; font-weight: bold; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4);
+  }
+
+  .titlebar-btn:hover { background: linear-gradient(180deg, #6cabf5 0%, #4090f0 50%, #2670d6 100%); }
+  .titlebar-btn.close { background: linear-gradient(180deg, #e36e6e 0%, #c63232 50%, #a01818 100%); }
+  .titlebar-btn.close:hover { background: linear-gradient(180deg, #f08080 0%, #d84040 50%, #b02020 100%); }
+
+  .menubar {
+    background: var(--xp-window-bg);
+    padding: 2px 4px;
+    border-bottom: 1px solid #aca899;
+    display: flex; gap: 2px;
+    font-size: 11px;
+  }
+
+  .menubar-item { padding: 2px 8px; cursor: pointer; border-radius: 2px; }
+  .menubar-item:hover { background: #316ac5; color: white; }
+  .menubar-item u { text-decoration: underline; }
+
+  .window-content {
+    background: white;
+    padding: 18px 22px;
+    line-height: 1.55;
+    font-size: 12px;
+  }
+
+  .window-content.beige { background: var(--xp-window-bg); }
+
+  h1 {
+    font-family: "Trebuchet MS", "Tahoma", sans-serif;
+    font-size: 24px; margin: 0 0 4px;
+    color: #0c3e8c; font-weight: bold;
+    letter-spacing: -0.3px;
+  }
+
+  h2 {
+    font-family: "Trebuchet MS", "Tahoma", sans-serif;
+    font-size: 14px;
+    margin: 18px 0 8px;
+    color: #0c3e8c; font-weight: bold;
+    border-bottom: 1px solid #d4d0c8;
+    padding-bottom: 3px;
+  }
+
+  h2:first-child { margin-top: 0; }
+  p { margin: 0 0 10px; }
+
+  a { color: var(--xp-link); text-decoration: underline; }
+  a:hover { color: #ff0000; }
+
+  ul { margin: 0 0 10px; padding-left: 18px; }
+  li { margin-bottom: 4px; }
+
+  .tagline {
+    font-style: italic;
+    color: #555;
+    font-size: 12px;
+    margin-top: 0;
+  }
+
+  .welcome-panel {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px; align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .welcome-icon {
+    width: 76px; height: 76px;
+    background: linear-gradient(135deg, #88c5ee 0%, #2469b0 60%, #1c4275 100%);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 38px; font-weight: bold;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.4), 0 3px 8px rgba(0,0,0,0.25);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.25);
+  }
+
+  .section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px; margin-top: 14px;
+  }
+
+  .info-card {
+    background: #f7f5e8;
+    border: 1px solid #aca899;
+    padding: 10px 12px;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.6);
+  }
+
+  .info-card h3 {
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 12px;
+    margin: 0 0 6px;
+    color: #0c3e8c; font-weight: bold;
+  }
+
+  .info-card p { font-size: 11px; margin: 0; line-height: 1.5; }
+
+  .work-entry {
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px dotted #c8c4b0;
+  }
+
+  .work-entry:last-child {
+    border-bottom: none; margin-bottom: 0; padding-bottom: 0;
+  }
+
+  .work-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: 6px;
+    margin-bottom: 2px;
+  }
+
+  .work-role {
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 13px; font-weight: bold;
+    color: #0c3e8c;
+  }
+
+  .work-role-title {
+    font-style: italic; font-weight: normal;
+    color: #444; margin-left: 4px;
+  }
+
+  .work-dates {
+    font-size: 11px; color: #666;
+    font-family: "Tahoma", sans-serif;
+  }
+
+  .work-meta { font-size: 11px; color: #777; margin-bottom: 6px; }
+  .work-entry ul { margin: 4px 0 0; font-size: 11.5px; }
+
+  .btn-row {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .xp-btn {
+    background: linear-gradient(180deg, #f8f8f8 0%, #ece9d8 50%, #d8d4be 100%);
+    border: 1px solid #003c74; border-radius: 3px;
+    padding: 5px 14px;
+    font-family: "Tahoma", sans-serif; font-size: 11px;
+    cursor: pointer;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.8), inset -1px -1px 0 rgba(0,0,0,0.1);
+    color: var(--xp-text); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+
+  .xp-btn:hover {
+    background: linear-gradient(180deg, #fffeec 0%, #fff4ac 50%, #ffd55b 100%);
+    border-color: #e09020; color: var(--xp-text);
+  }
+
+  .xp-btn:active {
+    background: linear-gradient(180deg, #d8d4be 0%, #ece9d8 50%, #f8f8f8 100%);
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+  }
+
+  .file-list { list-style: none; padding: 0; margin: 6px 0; }
+
+  .file-list li {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 4px 5px; border-radius: 2px;
+    line-height: 1.5;
+  }
+
+  .file-list li:hover { background: #d4e5fc; }
+  .file-icon { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
+
+  .skill-group { margin-bottom: 10px; font-size: 11.5px; }
+
+  .skill-group strong {
+    color: #0c3e8c;
+    font-family: "Trebuchet MS", sans-serif;
+  }
+
+  .skill-chip {
+    display: inline-block;
+    background: #f7f5e8;
+    border: 1px solid #aca899;
+    padding: 1px 6px; margin: 2px 2px;
+    font-size: 11px; border-radius: 2px;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.7);
+  }
+
+  .substack-todo {
+    background: #fffce8;
+    border: 1px dashed #c89020;
+    padding: 8px 10px; margin: 6px 0;
+    font-size: 11px; color: #664410;
+  }
+
+  .substack-todo strong { color: #884400; }
+
+  .taskbar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 30px;
+    background: var(--xp-taskbar);
+    border-top: 1px solid #0a4cb6;
+    display: flex; align-items: center;
+    z-index: 100;
+    box-shadow: 0 -1px 0 #2879c6;
+  }
+
+  .start-button {
+    height: 26px; margin: 2px 0 2px 2px; padding: 0 18px 0 12px;
+    background: var(--xp-start-btn);
+    color: white;
+    font-family: "Tahoma", sans-serif;
+    font-size: 13px; font-style: italic; font-weight: bold;
+    border: none; border-radius: 0 12px 12px 0;
+    cursor: pointer;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.2);
+  }
+
+  .start-button:hover {
+    background: linear-gradient(180deg, #6ebc66 0%, #4c9c44 50%, #458d3e 100%);
+  }
+
+  .start-flag {
+    width: 18px; height: 18px;
+    background: linear-gradient(135deg, #f23030 0%, #e57c1e 25%, #e8d022 50%, #45a82c 75%, #1e63b5 100%);
+    border-radius: 2px;
+  }
+
+  .taskbar-tabs {
+    flex: 1;
+    display: flex; gap: 2px;
+    padding: 0 4px; overflow: hidden;
+  }
+
+  .taskbar-tab {
+    background: linear-gradient(180deg, #3c8cf2 0%, #1f5fc6 100%);
+    color: white;
+    padding: 0 12px; height: 22px; margin: 4px 0;
+    border-radius: 3px; font-size: 11px;
+    display: flex; align-items: center; gap: 5px;
+    cursor: pointer;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.15);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    max-width: 200px; overflow: hidden;
+    white-space: nowrap; text-overflow: ellipsis;
+  }
+
+  .taskbar-tab.active {
+    background: linear-gradient(180deg, #1f5fc6 0%, #3c8cf2 100%);
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.3);
+  }
+
+  .system-tray {
+    height: 26px;
+    background: linear-gradient(180deg, #1290d8 0%, #0e6ec2 100%);
+    border-left: 1px solid #0a4cb6;
+    border-radius: 4px 0 0 4px;
+    margin-right: 2px; padding: 0 8px 0 12px;
+    display: flex; align-items: center; gap: 8px;
+    color: white; font-size: 11px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+
+  .tray-icon { width: 14px; height: 14px; opacity: 0.9; }
+
+  .signature {
+    text-align: right; color: #888;
+    font-size: 10px; font-style: italic;
+    margin-top: 12px;
+  }
+
+  .heart { color: #2469b0; }
+
+  .pull-quote {
+    border-left: 3px solid #88c5ee;
+    padding: 6px 12px; margin: 12px 0;
+    background: #f4f9fd;
+    font-style: italic; color: #2c4a6e;
+    font-size: 12px;
+  }
+
+  @media (max-width: 760px) {
+    .desktop-icons { display: none; }
+    .desktop { padding: 12px 12px 50px; }
+    .window-content { padding: 14px 16px; }
+    .welcome-panel { grid-template-columns: 1fr; text-align: center; }
+    .welcome-icon { width: 56px; height: 56px; font-size: 28px; margin: 0 auto; }
+    .section-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 20px; }
+    .system-tray .tray-text { display: none; }
+    .work-header { flex-direction: column; align-items: flex-start; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="desktop">
+
+  <div class="desktop-icons">
+    <a href="#about" class="desktop-icon">
+      <svg class="desktop-icon-img" viewBox="0 0 32 32">
+        <rect x="5" y="3" width="22" height="26" fill="#fffce8" stroke="#666"/>
+        <polyline points="22,3 22,8 27,8" fill="#fff" stroke="#666"/>
+        <line x1="8" y1="11" x2="20" y2="11" stroke="#316ac5" stroke-width="0.7"/>
+        <line x1="8" y1="14" x2="24" y2="14" stroke="#999" stroke-width="0.5"/>
+        <line x1="8" y1="17" x2="24" y2="17" stroke="#999" stroke-width="0.5"/>
+        <line x1="8" y1="20" x2="22" y2="20" stroke="#999" stroke-width="0.5"/>
+        <line x1="8" y1="23" x2="18" y2="23" stroke="#999" stroke-width="0.5"/>
+      </svg>
+      <div class="desktop-icon-label">About Me.txt</div>
+    </a>
+    <a href="#experience" class="desktop-icon">
+      <svg class="desktop-icon-img" viewBox="0 0 32 32">
+        <rect x="3" y="9" width="26" height="18" rx="1" fill="#f6c84a" stroke="#a07820"/>
+        <path d="M3,9 L3,7 L12,7 L14,9" fill="#f6c84a" stroke="#a07820"/>
+      </svg>
+      <div class="desktop-icon-label">Experience</div>
+    </a>
+    <a href="#writing" class="desktop-icon">
+      <svg class="desktop-icon-img" viewBox="0 0 32 32">
+        <rect x="4" y="4" width="24" height="24" rx="2" fill="#fff"/>
+        <rect x="4" y="4" width="24" height="6" rx="2" fill="#ff6719"/>
+        <text x="16" y="9" font-family="Tahoma" font-size="5" fill="#fff" text-anchor="middle" font-weight="bold">SUBSTACK</text>
+        <text x="16" y="22" font-family="Georgia" font-size="14" fill="#222" text-anchor="middle" font-style="italic">S</text>
+      </svg>
+      <div class="desktop-icon-label">Writing</div>
+    </a>
+    <a href="#contact" class="desktop-icon">
+      <svg class="desktop-icon-img" viewBox="0 0 32 32">
+        <rect x="3" y="8" width="26" height="18" rx="1" fill="#fff" stroke="#666"/>
+        <polyline points="3,8 16,18 29,8" fill="none" stroke="#316ac5" stroke-width="1.5"/>
+      </svg>
+      <div class="desktop-icon-label">Contact</div>
+    </a>
+  </div>
+
+  <div class="window-stack">
+
+    <div class="window" id="about">
+      <div class="titlebar">
+        <svg class="titlebar-icon" viewBox="0 0 16 16">
+          <circle cx="8" cy="8" r="7" fill="#fffce8" stroke="#000" stroke-width="0.5"/>
+          <text x="8" y="11" font-family="Tahoma" font-size="9" fill="#316ac5" text-anchor="middle" font-weight="bold">S</text>
+        </svg>
+        <span class="titlebar-text">sreenidhi.exe — Welcome</span>
+        <div class="titlebar-buttons">
+          <button class="titlebar-btn">_</button>
+          <button class="titlebar-btn">▢</button>
+          <button class="titlebar-btn close">✕</button>
+        </div>
+      </div>
+      <div class="menubar">
+        <span class="menubar-item"><u>F</u>ile</span>
+        <span class="menubar-item"><u>E</u>dit</span>
+        <span class="menubar-item"><u>V</u>iew</span>
+        <span class="menubar-item"><u>H</u>elp</span>
+      </div>
+      <div class="window-content">
+        <div class="welcome-panel">
+          <div class="welcome-icon">S</div>
+          <div>
+            <h1>Sreenidhi Nallajerla</h1>
+            <p class="tagline">Cybersecurity consultant &amp; founder · Bengaluru</p>
+          </div>
+        </div>
+
+        <p>I run security assessments and compliance programs for clients across <strong>healthcare, AI, and fintech</strong>: penetration testing, DAST pipelines, compliance standards (ABDM/NHA, OWASP), and agentic AI workflows. On the product side, I'm building <strong>TASS</strong> — a stealth-mode platform focused on AI capability drift detection and design-phase threat analysis.</p>
+
+        <p>I believe the next generation of cybersecurity must shift from reactive defense to <em>continuous, AI-driven prevention</em> — catching threats and design flaws before they reach production, cost-effectively and at scale.</p>
+
+        <div class="pull-quote">
+          tracing the lines between self-trust and security.
+        </div>
+
+        <div class="section-grid">
+          <div class="info-card">
+            <h3>📁 Currently</h3>
+            <p>Founding TASS · Lead security consultant at Caladrius Health AI · Mobile &amp; web AppSec for NIFECARD · Writing on AI security at <a href="https://substack.com/@mozartchangedmylife" target="_blank" rel="noopener">mozartchangedmylife</a></p>
+          </div>
+          <div class="info-card">
+            <h3>🎓 Background</h3>
+            <p>B.Tech CSE (Cybersecurity), PES University — CGPA 8.83. 6× Distinction Award (DAC scholarship). Specialised in Cybersecurity &amp; Connected Systems.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="window" id="experience">
+      <div class="titlebar">
+        <svg class="titlebar-icon" viewBox="0 0 16 16">
+          <rect x="2" y="4" width="12" height="10" rx="0.5" fill="#f6c84a" stroke="#a07820"/>
+          <path d="M2,4 L2,3 L7,3 L8,4" fill="#f6c84a" stroke="#a07820"/>
+        </svg>
+        <span class="titlebar-text">Experience — My Work</span>
+        <div class="titlebar-buttons">
+          <button class="titlebar-btn">_</button>
+          <button class="titlebar-btn">▢</button>
+          <button class="titlebar-btn close">✕</button>
+        </div>
+      </div>
+      <div class="window-content">
+
+        <div class="work-entry">
+          <div class="work-header">
+            <div class="work-role">TASS<span class="work-role-title"> · Founder (Stealth)</span></div>
+            <div class="work-dates">Jul 2025 – Present</div>
+          </div>
+          <div class="work-meta">Remote</div>
+          <ul>
+            <li>Building a spec-based code capability scanner from the ground up as solo founder — responsible for product design, architecture, and full-stack engineering.</li>
+            <li>Developed an app (with Tree-sitter AST parsing) that scans pull requests for newly introduced capabilities (network calls, database writes, new dependencies, privilege patterns) and surfaces them for explicit human review before merge.</li>
+          </ul>
+        </div>
+
+        <div class="work-entry">
+          <div class="work-header">
+            <div class="work-role">Caladrius Health AI<span class="work-role-title"> · Security Consultant</span></div>
+            <div class="work-dates">Nov 2025 – Present</div>
+          </div>
+          <div class="work-meta">Remote</div>
+          <ul>
+            <li>Leading ABDM M1/M2/M3 certification readiness, developing automated bash test suites and end-to-end functional testing frameworks for NHA compliance.</li>
+            <li>Conducting Web Application Security Assessments (WASA) and implementing a DAST pipeline, producing audit-ready findings reports from multi-tool analysis.</li>
+            <li>Driving end-to-end agentic AI transformation — from enterprise developer tooling with policy governance, through LLM-assisted dev pipelines with integrated security remediation, to autonomous n8n-orchestrated workflows in production.</li>
+            <li>Advising on AI infrastructure strategy: model provider architecture, autonomous development pipelines, and compliance-first document processing design.</li>
+          </ul>
+        </div>
+
+        <div class="work-entry">
+          <div class="work-header">
+            <div class="work-role">NIFECARD<span class="work-role-title"> · Security Consultant</span></div>
+            <div class="work-dates">Aug 2025 – Present</div>
+          </div>
+          <div class="work-meta">Remote</div>
+          <ul>
+            <li>Conducting iterative mobile application security assessments across Android APKs — static analysis, dynamic testing, and penetration testing across three engagements.</li>
+            <li>Performing web application security assessments on the NIFECARD platform, identifying and reporting vulnerabilities across the full OWASP testing scope.</li>
+          </ul>
+        </div>
+
+        <div class="work-entry">
+          <div class="work-header">
+            <div class="work-role">Dezerv<span class="work-role-title"> · Security Engineering Intern</span></div>
+            <div class="work-dates">Jan 2025 – Jun 2025</div>
+          </div>
+          <div class="work-meta">On-site, Bengaluru</div>
+          <ul>
+            <li>Built Dezerv's internal vulnerability management pipeline with automated scanning, issue tracking, and dashboarding using GitHub Actions, GoSec, XEOL, and GitLeaks.</li>
+            <li>Integrated security tooling into CI/CD, configured AWS backups, and ensured compliance with internal and external security standards.</li>
+            <li>Led vulnerability triaging and collaborated with engineering for timely remediation, aligned with OWASP and DevSecOps best practices.</li>
+            <li>Supported threat modeling and risk assessments for new features across on-prem and cloud deployments.</li>
+            <li>Contributed to PII tokenization, Superset RBAC policy enforcement, and secure dashboard access for client financial relationship managers.</li>
+            <li>Initiated and led the Security Champions program to evangelise secure coding practices across teams.</li>
+          </ul>
+        </div>
+
+        <div class="work-entry">
+          <div class="work-header">
+            <div class="work-role">PES University<span class="work-role-title"> · Teaching Assistant (Information Security)</span></div>
+            <div class="work-dates">Jan 2025 – May 2025</div>
+          </div>
+          <div class="work-meta">On-site, Bengaluru</div>
+          <ul>
+            <li>Selected as TA for an advanced elective covering threat modelling, application security, and penetration testing — worked directly with Prof. Sushma E.</li>
+            <li>Designed and delivered lab assignments and demonstrations on Wireshark, OWASP ZAP, Kali Linux, and SeedLabs.</li>
+            <li>Led weekly lab sessions; provided personalised feedback on student submissions, code reviews, and project evaluations.</li>
+          </ul>
+        </div>
+
+        <div class="work-entry">
+          <div class="work-header">
+            <div class="work-role">Florida International University<span class="work-role-title"> · Research Intern, Global Forensic and Justice Center</span></div>
+            <div class="work-dates">Jun 2024 – Aug 2024</div>
+          </div>
+          <div class="work-meta">Remote · FINDS Research Center of Excellence (US Army Research Office, Grant W91INF-21.1.0264)</div>
+          <ul>
+            <li>Investigated network traffic obfuscation under traffic attacks; presented weekly progress reports and submitted a draft research paper.</li>
+          </ul>
+        </div>
+
+        <div class="work-entry">
+          <div class="work-header">
+            <div class="work-role">CID Karnataka<span class="work-role-title"> · Software Development Intern, Center of Cybercrime Investigation</span></div>
+            <div class="work-dates">Jun 2024 – Aug 2024</div>
+          </div>
+          <div class="work-meta">Hybrid, Bengaluru</div>
+          <ul>
+            <li>Developed an open-source, offline investigative tool with mobile dump file retrieval, face detection, object detection (weapons, plates, documents, substances), and chronological multimedia timeline mapping.</li>
+            <li>Owned the project frontend and designed the timeline component; integrated backend data extraction with frontend visualisation for a seamless investigative UX.</li>
+            <li>Worked directly with investigators to translate law enforcement requirements into technical specifications, ensuring the tool addressed real-world mobile forensics workflows and evidence handling standards.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="window" id="writing">
+      <div class="titlebar">
+        <svg class="titlebar-icon" viewBox="0 0 16 16">
+          <rect x="2" y="2" width="12" height="12" fill="#fffce8" stroke="#000" stroke-width="0.5"/>
+          <line x1="4" y1="5" x2="12" y2="5" stroke="#316ac5"/>
+          <line x1="4" y1="8" x2="12" y2="8" stroke="#666"/>
+          <line x1="4" y1="11" x2="10" y2="11" stroke="#666"/>
+        </svg>
+        <span class="titlebar-text">Writing — Selected Pieces</span>
+        <div class="titlebar-buttons">
+          <button class="titlebar-btn">_</button>
+          <button class="titlebar-btn">▢</button>
+          <button class="titlebar-btn close">✕</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <p>I write at <a href="https://substack.com/@mozartchangedmylife" target="_blank" rel="noopener"><strong>mozartchangedmylife</strong></a> — research-grade pieces on AI security, attack frameworks, and the unseen layers of digital life. <em>Pianist in passing, cybersecurity engineer by trade.</em></p>
+
+        <h2>Selected pieces</h2>
+
+        <div class="substack-todo">
+          <strong>⚠️ TODO before deploying:</strong> replace the three placeholder entries below with your strongest pieces. Each needs (1) the post title, (2) a one-sentence hook, (3) the full URL. Pick whichever pieces best show your security thinking + your voice — what would you want a senior recruiter to read first?
+        </div>
+
+        <ul class="file-list">
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16">
+              <rect x="2" y="1" width="11" height="14" fill="#fff" stroke="#666"/>
+              <polyline points="10,1 10,4 13,4" fill="none" stroke="#666"/>
+              <line x1="4" y1="7" x2="11" y2="7" stroke="#316ac5"/>
+              <line x1="4" y1="10" x2="11" y2="10" stroke="#888"/>
+              <line x1="4" y1="12" x2="9" y2="12" stroke="#888"/>
+            </svg>
+            <span><a href="https://substack.com/@mozartchangedmylife" target="_blank" rel="noopener"><strong>[REPLACE: Article title 1]</strong></a> — one-sentence description of what the piece argues or explores.</span>
+          </li>
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16">
+              <rect x="2" y="1" width="11" height="14" fill="#fff" stroke="#666"/>
+              <polyline points="10,1 10,4 13,4" fill="none" stroke="#666"/>
+              <line x1="4" y1="7" x2="11" y2="7" stroke="#316ac5"/>
+              <line x1="4" y1="10" x2="11" y2="10" stroke="#888"/>
+              <line x1="4" y1="12" x2="9" y2="12" stroke="#888"/>
+            </svg>
+            <span><a href="https://substack.com/@mozartchangedmylife" target="_blank" rel="noopener"><strong>[REPLACE: Article title 2]</strong></a> — one-sentence description.</span>
+          </li>
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16">
+              <rect x="2" y="1" width="11" height="14" fill="#fff" stroke="#666"/>
+              <polyline points="10,1 10,4 13,4" fill="none" stroke="#666"/>
+              <line x1="4" y1="7" x2="11" y2="7" stroke="#316ac5"/>
+              <line x1="4" y1="10" x2="11" y2="10" stroke="#888"/>
+              <line x1="4" y1="12" x2="9" y2="12" stroke="#888"/>
+            </svg>
+            <span><a href="https://substack.com/@mozartchangedmylife" target="_blank" rel="noopener"><strong>[REPLACE: Article title 3]</strong></a> — one-sentence description.</span>
+          </li>
+        </ul>
+
+        <div class="btn-row">
+          <a href="https://substack.com/@mozartchangedmylife" class="xp-btn" target="_blank" rel="noopener">📖 Read all on Substack</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="window">
+      <div class="titlebar">
+        <svg class="titlebar-icon" viewBox="0 0 16 16">
+          <rect x="2" y="2" width="12" height="12" fill="#c8c4b0" stroke="#666"/>
+          <rect x="3" y="3" width="10" height="2" fill="#316ac5"/>
+          <rect x="3" y="6" width="4" height="3" fill="#aaa"/>
+          <rect x="8" y="6" width="5" height="3" fill="#aaa"/>
+          <rect x="3" y="10" width="10" height="3" fill="#aaa"/>
+        </svg>
+        <span class="titlebar-text">Skills — Control Panel</span>
+        <div class="titlebar-buttons">
+          <button class="titlebar-btn">_</button>
+          <button class="titlebar-btn">▢</button>
+          <button class="titlebar-btn close">✕</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="skill-group">
+          <strong>Security &amp; DevSecOps:</strong>
+          <span class="skill-chip">Vulnerability Management</span>
+          <span class="skill-chip">Threat Modeling</span>
+          <span class="skill-chip">Pentesting (OWASP)</span>
+          <span class="skill-chip">Secure Coding</span>
+          <span class="skill-chip">CI/CD Security</span>
+          <span class="skill-chip">GitHub Actions</span>
+        </div>
+        <div class="skill-group">
+          <strong>Security Tools:</strong>
+          <span class="skill-chip">GoSec</span>
+          <span class="skill-chip">GitLeaks</span>
+          <span class="skill-chip">Semgrep</span>
+          <span class="skill-chip">Bearer</span>
+          <span class="skill-chip">SonarQube</span>
+          <span class="skill-chip">Checkov</span>
+          <span class="skill-chip">Snyk</span>
+          <span class="skill-chip">OWASP ZAP</span>
+          <span class="skill-chip">Wireshark</span>
+          <span class="skill-chip">Scapy</span>
+          <span class="skill-chip">FTK Imager</span>
+          <span class="skill-chip">Autopsy</span>
+        </div>
+        <div class="skill-group">
+          <strong>Cloud &amp; Infrastructure:</strong>
+          <span class="skill-chip">AWS Security</span>
+          <span class="skill-chip">Docker</span>
+          <span class="skill-chip">Kubernetes</span>
+          <span class="skill-chip">Terraform</span>
+          <span class="skill-chip">Podman</span>
+          <span class="skill-chip">Tailscale</span>
+          <span class="skill-chip">DigitalOcean</span>
+        </div>
+        <div class="skill-group">
+          <strong>Programming:</strong>
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip">Golang</span>
+          <span class="skill-chip">C</span>
+          <span class="skill-chip">Bash</span>
+        </div>
+        <div class="skill-group">
+          <strong>Frameworks &amp; Standards:</strong>
+          <span class="skill-chip">OWASP</span>
+          <span class="skill-chip">NIST</span>
+          <span class="skill-chip">SANS</span>
+          <span class="skill-chip">CIS</span>
+          <span class="skill-chip">ABDM/NHA</span>
+        </div>
+        <div class="skill-group">
+          <strong>AI &amp; Automation:</strong>
+          <span class="skill-chip">n8n</span>
+          <span class="skill-chip">LLM-assisted pipelines</span>
+          <span class="skill-chip">Claude Code</span>
+          <span class="skill-chip">Agentic workflow design</span>
+        </div>
+        <div class="skill-group">
+          <strong>Other:</strong>
+          <span class="skill-chip">Prometheus + Grafana</span>
+          <span class="skill-chip">Superset</span>
+          <span class="skill-chip">Snowflake</span>
+          <span class="skill-chip">MySQL</span>
+          <span class="skill-chip">MongoDB</span>
+          <span class="skill-chip">PostgreSQL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="window">
+      <div class="titlebar">
+        <svg class="titlebar-icon" viewBox="0 0 16 16">
+          <circle cx="8" cy="6" r="4" fill="#ffd700" stroke="#a08020"/>
+          <path d="M5,9 L4,15 L8,13 L12,15 L11,9" fill="#cc3030" stroke="#882020"/>
+        </svg>
+        <span class="titlebar-text">Certifications, Awards &amp; Extracurriculars</span>
+        <div class="titlebar-buttons">
+          <button class="titlebar-btn">_</button>
+          <button class="titlebar-btn">▢</button>
+          <button class="titlebar-btn close">✕</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <h2>Certifications</h2>
+        <ul class="file-list">
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" fill="#fff" stroke="#666"/><polyline points="5,8 7,11 11,5" fill="none" stroke="#3a8c3a" stroke-width="1.5"/></svg>
+            <span><strong>Secure Software Design Specialization</strong> — University of Colorado · Oct 2025</span>
+          </li>
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" fill="#fff" stroke="#666"/><polyline points="5,8 7,11 11,5" fill="none" stroke="#3a8c3a" stroke-width="1.5"/></svg>
+            <span><strong>Machine Learning Specialization</strong> — Stanford / DeepLearning.ai · Oct 2024</span>
+          </li>
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" fill="#fff" stroke="#666"/><polyline points="5,8 7,11 11,5" fill="none" stroke="#3a8c3a" stroke-width="1.5"/></svg>
+            <span><strong>Indo-Dutch Cyber Security School (IDCSS 2024)</strong> — DSCI / Hague Centre for Strategic Studies · Nov 2024</span>
+          </li>
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" fill="#fff" stroke="#666"/><polyline points="5,8 7,11 11,5" fill="none" stroke="#3a8c3a" stroke-width="1.5"/></svg>
+            <span><strong>The Great AppSec Hackathon</strong> — DSCI, Govt. of Telangana · Aug 2024</span>
+          </li>
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="3" fill="#cd7f32" stroke="#666"/><path d="M5,9 L4,14 L8,12 L12,14 L11,9" fill="#cc3030" stroke="#882020"/></svg>
+            <span><strong>3rd Place — Dark Web Monitoring Track, CIDECODE</strong> · CID Karnataka · Mar 2024</span>
+          </li>
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" fill="#fff" stroke="#666"/><polyline points="5,8 7,11 11,5" fill="none" stroke="#3a8c3a" stroke-width="1.5"/></svg>
+            <span><strong>Linux Kernel Development (LFD103)</strong> — The Linux Foundation · Feb 2023</span>
+          </li>
+        </ul>
+
+        <h2>Beyond the terminal</h2>
+        <ul class="file-list">
+          <li>
+            <svg class="file-icon" viewBox="0 0 16 16"><rect x="3" y="2" width="10" height="12" fill="#222" stroke="#000"/><rect x="4" y="3" width="2" height="8" fill="#fff"/><rect x="7" y="3" width="2" height="8" fill="#fff"/><rect x="10" y="3" width="2" height="8" fill="#fff"/></svg>
+            <span><strong>Classical Piano</strong> — Trinity College of London. Merit/Distinction across all grades from Initial to Grade 8. Currently pursuing the Associate Diploma (ATCL) in Classical Piano Performance at Piano Passion, Bengaluru.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="window" id="contact">
+      <div class="titlebar">
+        <svg class="titlebar-icon" viewBox="0 0 16 16">
+          <rect x="2" y="4" width="12" height="9" rx="0.5" fill="#fffce8" stroke="#000"/>
+          <polyline points="2,4 8,9 14,4" fill="none" stroke="#316ac5"/>
+        </svg>
+        <span class="titlebar-text">Get in touch</span>
+        <div class="titlebar-buttons">
+          <button class="titlebar-btn">_</button>
+          <button class="titlebar-btn">▢</button>
+          <button class="titlebar-btn close">✕</button>
+        </div>
+      </div>
+      <div class="window-content beige">
+        <p style="margin-bottom: 12px;">For consulting work, speaking, collaboration, or just to say hi:</p>
+        <div class="btn-row">
+          <a href="mailto:sreenidhin2002@gmail.com" class="xp-btn">✉ Email</a>
+          <a href="https://www.linkedin.com/in/sreenidhi-nallajerla-2352491b1/" class="xp-btn" target="_blank" rel="noopener">🔗 LinkedIn</a>
+          <a href="https://substack.com/@mozartchangedmylife" class="xp-btn" target="_blank" rel="noopener">📝 Substack</a>
+          <a href="tel:+919611642552" class="xp-btn">📞 +91 96116 42552</a>
+        </div>
+        <p class="signature">— made with <span class="heart">💙</span> in Bengaluru</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="taskbar">
+  <button class="start-button" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <span class="start-flag"></span>
+    start
+  </button>
+  <div class="taskbar-tabs">
+    <div class="taskbar-tab active">
+      <svg width="14" height="14" viewBox="0 0 16 16">
+        <circle cx="8" cy="8" r="7" fill="#fffce8" stroke="#000" stroke-width="0.5"/>
+        <text x="8" y="11" font-family="Tahoma" font-size="8" fill="#316ac5" text-anchor="middle" font-weight="bold">S</text>
+      </svg>
+      sreenidhi.exe
+    </div>
+  </div>
+  <div class="system-tray">
+    <svg class="tray-icon" viewBox="0 0 16 16">
+      <rect x="2" y="6" width="12" height="6" fill="#c8c4b0" stroke="#666"/>
+      <rect x="3" y="7" width="3" height="4" fill="#4a90d8"/>
+    </svg>
+    <svg class="tray-icon" viewBox="0 0 16 16">
+      <path d="M8,2 L4,6 L4,12 L12,12 L12,6 Z" fill="#c8c4b0" stroke="#666"/>
+      <circle cx="8" cy="9" r="2" fill="#4a90d8"/>
+    </svg>
+    <span class="tray-text" id="clock">12:34 PM</span>
+  </div>
+</div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    let h = now.getHours();
+    const m = now.getMinutes().toString().padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    const el = document.getElementById('clock');
+    if (el) el.textContent = `${h}:${m} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  document.querySelectorAll('.titlebar-btn.close').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const win = e.target.closest('.window');
+      if (!win) return;
+      win.style.transition = 'opacity 0.2s, transform 0.2s';
+      win.style.opacity = '0';
+      win.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        win.style.opacity = '1';
+        win.style.transform = 'scale(1)';
+      }, 600);
+    });
+  });
+</script>
+
+</body>
+</html>
