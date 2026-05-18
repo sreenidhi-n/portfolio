@@ -746,7 +746,7 @@ const PianoApp = ({ active }) => {
     playingRef.current = true;
     setReadout('♪ Rondo in A minor, K. 511');
     const ctx = ensureCtx();
-    const tempo = 78;  // Andante
+    const tempo = 50;  // Andante
     const beat = 60 / tempo * 1000 * 0.85;
     for (const [m, b] of PIANO_PHRASE) {
       const dur = (b * beat) / 1000;
