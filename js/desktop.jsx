@@ -350,7 +350,7 @@ function LoginScreen({ onEnter }) {
         <div className="login-body">
           <div className="login-side">
             <img
-              src="assets/sreenidhi.jpg"
+              src="./assets/sreenidhi.jpg"
               alt="Sreenidhi Nallajerla"
               style={{
                 width: '100%', maxWidth: 120,
